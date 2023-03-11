@@ -18,7 +18,7 @@ const printX = (arr) =>
 const productCard = ({ picture, title, desc }) => {
   return (
     <div className="product">
-      <img src={picture} />
+      <img width="500px" src={picture} />
       <div className="title">{title}</div>
       <div className="desc">{desc}</div>
     </div>
@@ -78,7 +78,6 @@ function App() {
         type="button"
         onClick={() => {
           const arr1 = toDoArr.filter((item) => item.id !== id);
-          console.log(arr1);
           setToDoArr(arr1);
         }}
       >
@@ -93,6 +92,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <Pasha />
         <h1> TO DO LIST </h1>
+        <h2>{toDoArr.length}</h2>
 
         <input
           type="text"
