@@ -77,11 +77,7 @@ function App() {
       <button
         type="button"
         onClick={() => {
-          const arr1 = toDoArr.map((item, index) => {
-            toDoArr.splice(index, 1);
-            console.log(item);
-            return item;
-          });
+          const arr1 = toDoArr.filter((item) => item.id !== id);
           console.log(arr1);
           setToDoArr(arr1);
         }}
