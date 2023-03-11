@@ -3,6 +3,7 @@ import And from "./And";
 import logo from "./logo.svg";
 
 import "./App.css";
+import { render } from "@testing-library/react";
 
 const x = [{ name: "a" }, { name: "b" }];
 
@@ -44,6 +45,7 @@ function App() {
       <And test="Hello" productArray={productArray} />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        {toDoArr.map((item) => renderToDo(item))}
         <p>
           Edit <code>src/App.js</code> and save to reload.kjhgjhg
         </p>
@@ -55,4 +57,23 @@ function App() {
   );
 }
 
+const toDoArr = [
+  {
+    id: 1,
+    action: "помыть посуду",
+    selected: true,
+  },
+  {
+    id: 2,
+    action: "сделать уборку",
+    selected: false,
+  },
+];
+const renderToDo = ({ action, selected }) => (
+  <li className={selected ? "none" : ""}>
+    {action} <input type="checkbox" checked={selected} />
+  </li>
+);
+{
+}
 export default App;
