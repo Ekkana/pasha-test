@@ -1,9 +1,10 @@
 import And from "./And";
-
+import { useState } from "react";
 import logo from "./logo.svg";
 
 import "./App.css";
-import { render } from "@testing-library/react";
+
+import Pasha from "./Pasha";
 
 const x = [{ name: "a" }, { name: "b" }];
 
@@ -39,13 +40,85 @@ const productArray = [
   },
 ];
 
+let counter = 3;
+
 function App() {
+  const [text, setText] = useState("");
+  const [toDoArr, setToDoArr] = useState([
+    {
+      id: 1,
+      action: "помыть посуду",
+      selected: true,
+    },
+    {
+      id: 2,
+      action: "сделать уборку",
+      selected: false,
+    },
+  ]);
+
+  const renderToDo = ({ id, action, selected }) => (
+    <li className={selected ? "none" : ""}>
+      {action}{" "}
+      <input
+        type="checkbox"
+        checked={selected}
+        onChange={() => {
+          const arr = toDoArr.map((item) => {
+            if (item.id === id) {
+              item.selected = !item.selected;
+            }
+            return item;
+          });
+          console.log(arr);
+          setToDoArr(arr);
+        }}
+      />{" "}
+      <button
+        type="button"
+        onClick={() => {
+          const arr1 = toDoArr.map((item, index) => {
+            toDoArr.splice(index, 1);
+            console.log(item);
+            return item;
+          });
+          console.log(arr1);
+          setToDoArr(arr1);
+        }}
+      >
+        X
+      </button>
+    </li>
+  );
   return (
     <div className="App">
-      <And test="Hello" productArray={productArray} />
+      {/* <And test="Hello" productArray={productArray} /> */}
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        {toDoArr.map((item) => renderToDo(item))}
+        <Pasha />
+        <h1> TO DO LIST </h1>
+
+        <input
+          type="text"
+          value={text}
+          onChange={(e) => {
+            console.log(e);
+            setText(e.target.value);
+          }}
+        />
+        <button
+          tupe="button"
+          onClick={() => {
+            counter++;
+            setToDoArr([
+              ...toDoArr,
+              { id: counter, action: text, selected: false },
+            ]);
+          }}
+        >
+          Add
+        </button>
+        <ol>{toDoArr.map((item) => renderToDo(item))}</ol>
         <p>
           Edit <code>src/App.js</code> and save to reload.kjhgjhg
         </p>
@@ -57,23 +130,4 @@ function App() {
   );
 }
 
-const toDoArr = [
-  {
-    id: 1,
-    action: "помыть посуду",
-    selected: true,
-  },
-  {
-    id: 2,
-    action: "сделать уборку",
-    selected: false,
-  },
-];
-const renderToDo = ({ action, selected }) => (
-  <li className={selected ? "none" : ""}>
-    {action} <input type="checkbox" checked={selected} />
-  </li>
-);
-{
-}
 export default App;
