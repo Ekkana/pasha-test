@@ -56,6 +56,17 @@ function App() {
       selected: false,
     },
   ]);
+  const [loginArr, setLoginArr] = useState("");
+  const [errorLogin, setErrorLogin] = useState("");
+  const [passArr, setPassArr] = useState("");
+  const [errorPass, setErrorPass] = useState("");
+  const button = document.querySelector(".button");
+
+  const checkForm = () => {
+    if (errorLogin === "" && errorPass === "") {
+      button.classList.remove("disabled");
+    }
+  };
 
   const renderToDo = ({ id, action, selected }) => (
     <li className={selected ? "none" : ""}>
@@ -91,6 +102,42 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Pasha />
+        <h1>Enter</h1>
+        <input
+          type="email"
+          placeholder="Введите ваш email"
+          onBlur={(e) => {
+            const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (!emailRegex.test(e.target.value)) {
+              setErrorLogin("Введите правильный email");
+              console.log(errorLogin);
+              button.classList.add("disabled");
+            } else {
+              setLoginArr(e.target.value);
+              setErrorLogin("");
+            }
+          }}
+        ></input>
+        <p>{errorLogin}</p>
+        <input
+          type="password"
+          placeholder="********"
+          onBlur={(e) => {
+            if (e.target.value.length < 8) {
+              setErrorPass("Введите правильный пароль");
+              console.log(errorPass);
+              button.classList.add("disabled");
+            } else {
+              setPassArr(e.target.value);
+              setErrorPass("");
+              checkForm();
+            }
+          }}
+        ></input>
+        <p>{errorPass}</p>
+        <button type="button" className={"button"}>
+          Send
+        </button>
         <h1> TO DO LIST </h1>
         <h2>{toDoArr.length}</h2>
 
